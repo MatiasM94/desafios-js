@@ -1,75 +1,49 @@
 // La idea principal es crear una app para el control de stock y clientes.
+// Accedo al formulario para capturar los datos despues del submit.
+const formularioProductos = document.querySelector("#agregarProducto");
 
-function bienvenida(saludo){
-    alert("Bienvenido " + saludo)
+formularioProductos.addEventListener("submit", formulario);
+
+function formulario(e) {
+    e.preventDefault();
+    let numero = document.querySelector("#numero").value;
+    let numeroId = document.querySelector("#nId").value;
+    let producto = document.querySelector("#producto").value;
+    let marca = document.querySelector("#marca").value;
+    let cantidad = document.querySelector("#cantidad").value;
+    let precio = document.querySelector("#precio").value;
+    productos.push(new Producto(numero, numeroId, producto, marca, cantidad, precio));
+    totalProductos()
+    limpiarInput()
 }
-function menu (){
-    opciones = prompt(`${saludo}, ¿Qué desea hacer?: \n 1: Agregar un producto. \n 2: Buscar un producto \n 3: Agregar un cliente. \n 4: Ver clientes. \n 5: Cerrar app.`);
-}
-function opcionesMenu(){
-    while(opciones != 5){
-        switch(opciones){
-            case "1":
-                ingresarProductos();
-                totalProductos()
-                opciones = prompt(`${saludo}, Producto agregado, elige una opcion para continuar: \n 1: Agregar un producto. \n 2: Buscar un producto \n 3: Agregar un cliente. \n 4: Ver clientes. \n 5: Cerrar app.`);
-                break;
-            case "2":
-                buscarProducto();
-                opciones = prompt(`${saludo}, Producto encontrado, elige una opcion para continuar: \n 1: Agregar un producto. \n 2: Buscar un producto \n 3: Agregar un cliente. \n 4: Ver clientes. \n 5: Cerrar app.`);
-                break;
-            case "3":
-                ingresarClientes()
-                opciones = prompt(`${saludo}, Cliente agregado, elige una opcion para continuar: \n 1: Agregar un producto. \n 2: Buscar un producto \n 3: Agregar un cliente. \n 4: Ver clientes. \n 5: Cerrar app.`);
-                break;
-            case "4":
-                totalClientes()
-                opciones = prompt(`${saludo}, Tus clientes se mostraron por consola, elige una opcion para continuar: \n 1: Agregar un producto. \n 2: Buscar un producto \n 3: Agregar un cliente. \n 4: Ver clientes. \n 5: Cerrar app.`);
-                break;
-            case "5":
-                alert("Gracias por utilizar nuestra app");
-                break;
-            default:
-                opciones = prompt("opcion incorrecta, Qué desea hacer?: \n 1: Agregar un producto. \n 2: Buscar un producto \n 3: Agregar un cliente. \n 4: Ver clientes. \n 5: Cerrar app.");
-        }
-    }
-}
-function ingresarProductos(){
-    productos.push(new Producto(prompt("ingrese el numero de orden de lista del producto(ej: 01, 02, 03, etc.):"), prompt("ingrese el ID del producto(id del proveedor)"), prompt("ingrese el nombre del producto"), prompt("ingrese el nombre de la marca del producto"), parseInt(prompt("ingrese la cantidad en stock")), Number(prompt("ingrese el precio del producto"))))
-}
-function buscarProducto(){
-    let buscar = prompt("ingrese el nombre del producto que desea buscar");
-    const resultado = productos.find((producto) => producto.nombre == buscar)
-        if (resultado != undefined) {
-            console.log(resultado)
-            alert("Tu busqueda a sido mostrada en la consola")
-        }else{
-            alert("Producto no encontrado")
-        }
-}
-function ingresarClientes(){
-    clientes.push(new Cliente(prompt("Ingrese el numero de cliente"), prompt("ingrese el nombre del cliente")));
-}
+// Creo un div con la informacion recibida del formulario y lo agrego en el html como hijo de un section.
 function totalProductos(){
-    const productoAgregado = document.createElement("div")
-    for (const producto of productos) {
-        productoAgregado.innerHTML = `<div><p>${producto.numero}</p></div><div><p>${producto.id}</p></div><div><p>${producto.nombre}</p></div><div><p>${producto.marca}</p></div><div><p>${producto.cantidad}</p></div><div><p>${producto.precio}</p></div><div>${producto.precio*1.21}</div><div><button class="eliminar"><svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-x-circle-fill" viewBox="0 0 16 16">
-        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"/>
-        </svg></i></button></div>`
-        productoAgregado.className = "indice-lista__productos"
+    const productoAgregado = document.createElement("div");
+    productos.forEach(producto => {
+        productoAgregado.innerHTML = `<div><p>${producto.numero}</p></div><div><p>${producto.id}</p></div><div><p>${producto.nombre}</p></div><div><p>${producto.marca}</p></div><div><p>${producto.cantidad}</p></div><div><p>${producto.precio}</p></div><div><p>${producto.precio*1.21}</p></div><div class="botones"><button id="eliminar"><i class="bi bi-x-circle-fill"></i></button></div>`;
+        productoAgregado.className = "indice-lista__productos";
         document.querySelector("#lista-productos").appendChild(productoAgregado);
-    }
-}
-function totalClientes(){
-    clientes.forEach( (cliente) => {
-        console.log("Cliente", cliente.nombre)
     })
 }
+// selecciono los imputs y les devuelvo un value vacio.
+function limpiarInput() {
+    numero = document.querySelector("#numero").value;
+    numero = document.querySelector("#numero").value = (Number(numero) + 1);
+    numeroId = document.querySelector("#nId").value = "";
+    producto = document.querySelector("#producto").value = "";
+    marca = document.querySelector("#marca").value = "";
+    cantidad = document.querySelector("#cantidad").value = "";
+    precio = document.querySelector("#precio").value = "";
+}
+// Selecciono un section del html y le agrego un evento "click" con un condicional para ejecutar la funcion con click en boton.
+const botonEliminar = document.querySelector("#lista-productos")
 
-// Aca empieza a ejecutarse la app
-let saludo = prompt("Ingrese su nombre de usuario");
-bienvenida(saludo);
-let opciones;
+botonEliminar.addEventListener("click", event => {
+    if(event.target && event.target.tagName === "I"){
+        event.target.parentNode.parentNode.parentNode.remove()
+    }
+})
+// Declaro arrays vacios y objetos para utilizarlos dentro de las funciones.
 const productos = [];
 class Producto {
     constructor(numero, id, nombre, marca, cantidad, precio){
@@ -88,8 +62,6 @@ class Cliente {
         this.nombre = nombre;
     }
 }
-menu();
-opcionesMenu();
 
 
 
