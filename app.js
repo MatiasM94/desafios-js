@@ -20,7 +20,7 @@ function formulario(e) {
 function totalProductos(){
     const productoAgregado = document.createElement("div");
     productos.forEach(producto => {
-        productoAgregado.innerHTML = `<div><p>${producto.numero}</p></div><div><p>${producto.id}</p></div><div><p>${producto.nombre}</p></div><div><p>${producto.marca}</p></div><div><p>${producto.cantidad}</p></div><div><p>${producto.precio}</p></div><div><p>${producto.precio*1.21}</p></div><div class="botones"><button id="eliminar"><i class="bi bi-x-circle-fill"></i></button></div>`;
+        productoAgregado.innerHTML = `<div><p>${producto.numero}</p></div><div><p class="numero-id">${producto.id}</p></div><div><p>${producto.nombre}</p></div><div><p>${producto.marca}</p></div><div><p>${producto.cantidad}</p></div><div><p>${producto.precio}</p></div><div><p>${producto.precio*1.21}</p></div><div class="botones"><button id="eliminar"><i class="bi bi-x-circle-fill"></i></button></div>`;
         productoAgregado.className = "indice-lista__productos";
         document.querySelector("#lista-productos").appendChild(productoAgregado);
     })
@@ -36,10 +36,18 @@ function limpiarInput() {
     precio = document.querySelector("#precio").value = "";
 }
 // Selecciono un section del html y le agrego un evento "click" con un condicional para ejecutar la funcion con click en boton.
+//Elimino del dom y del array el producto con evento "click".
 const botonEliminar = document.querySelector("#lista-productos")
-
 botonEliminar.addEventListener("click", event => {
     if(event.target && event.target.tagName === "I"){
+        let encontrarEnDom = event.target.parentNode.parentNode.parentNode
+        let valorEnDom = encontrarEnDom.querySelector(".numero-id").innerHTML
+
+        const resultado = productos.find((producto) => producto.id == valorEnDom)
+
+        let indice = productos.indexOf(resultado)
+
+        productos.splice(indice, 1)
         event.target.parentNode.parentNode.parentNode.remove()
     }
 })
