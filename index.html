@@ -1,82 +1,135 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="./css/style.css">
     <title>Desafios Js</title>
 </head>
+
 <body>
     <header class="encabezado__lateral">
         <h1 class="logo">Stockment</h1>
         <nav>
             <ul>
-                <li class="links">
-                    <a href="#">Productos</a>
-                </li>
-                <li class="links">
-                    <a href="#">Servicios</a>
-                </li>
-                <li class="links">
-                    <a href="#">Clientes</a>
-                </li>
-                <li class="links">
-                    <a href="#">Agenda</a>
-                </li>
+                <li><a href="#" class="links">Productos</a></li>
+                <li><a href="#" class="links">Clientes</a></li>
+                <li><a href="#" class="links">Agenda</a></li>
             </ul>
         </nav>
     </header>
-    <main>
+    <main id="content">
         <h2 class="titulo">Inventario</h2>
-        <section>
-            <div class="addproducto">
-                <form id="agregarProducto" action="">
-                    <label for="numero">Número:</label>
-                    <input id="numero" type="text" value="1">
-                    <label for="nId">ID:</label>
-                    <input type="text" id="nId">
-                    <label for="producto">Producto:</label>
-                    <input type="text" id="producto">
-                    <label for="marca">Marca:</label>
-                    <input type="text" id="marca">
-                    <label for="cantidad">Cantidad:</label>
-                    <input type="text" id="cantidad">
-                    <label for="precio">Precio:</label>
-                    <input type="text" id="precio">
-                    <button class="boton" id="enviarForm">Agregar Producto</button>
-                </form>
-                <!-- <button class="add-boton">Agregar Producto</button> -->
+        <section class="interaccion">
+            <!-- modal para agregar productos -->
+            <button type="button" class="boton" data-bs-toggle="modal" data-bs-target="#exampleModal">Agregar Producto</button>
+            <div class="buscador">
+                <label for="buscar">Buscar:</label>
+                <input type="text" id="buscar" placeholder="Ingrese el nombre del producto">
+            </div>
+            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Agregar producto</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body addproducto">
+                            <form id="agregarProducto" action="">
+                                <label for="numero">Número:</label>
+                                <input id="numero" type="text" value="1">
+                                <label for="nId">ID:</label>
+                                <input type="text" id="nId">
+                                <label for="producto">Producto:</label>
+                                <input type="text" id="producto">
+                                <label for="marca">Marca:</label>
+                                <input type="text" id="marca">
+                                <label for="cantidad">Cantidad:</label>
+                                <input type="text" id="cantidad">
+                                <label for="precio">Precio:</label>
+                                <input type="text" id="precio">
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-primary">Agregar Producto</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- modal para editar productos -->
+            <div class="modal fade" id="editarModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="editarModalLabel">Agregar producto</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body addproducto">
+                            <form id="editarProducto" action="">
+                                <label for="editarNumero">Número:</label>
+                                <input id="editarNumero" type="text" value="1">
+                                <label for="editarNid">ID:</label>
+                                <input type="text" id="editarNid">
+                                <label for="editarNombre">Producto:</label>
+                                <input type="text" id="editarNombre">
+                                <label for="editarMarca">Marca:</label>
+                                <input type="text" id="editarMarca">
+                                <label for="editarCantidad">Cantidad:</label>
+                                <input type="text" id="editarCantidad">
+                                <label for="editarPrecio">Precio:</label>
+                                <input type="text" id="editarPrecio">
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Editar Producto</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
-        <section class="indice-lista">
+        <section id="ordenarLista">
             <div>
-                <h3>número</h3>
+                <button class="botones_ordenar">Número</button>
             </div>
             <div>
-                <h3>id</h3>
+                <button class="botones_ordenar">ID</button>
             </div>
             <div>
-                <h3>producto</h3>
+                <button class="botones_ordenar">Producto</button>
             </div>
             <div>
-                <h3>marca</h3>
+                <button class="botones_ordenar">Marca</button>
             </div>
             <div>
-                <h3>cantidad</h3>
+                <button class="botones_ordenar">Cantidad</button>
             </div>
             <div>
-                <h3>precio</h3>
+                <button class="botones_ordenar">Precio</button>
             </div>
             <div>
-                <h3>Precio Iva</h3>
+                <button class="botones_ordenar">Precio IVA</button>
             </div>
             <div class="eliminar-edit">
             </div>
         </section>
         <section id="lista-productos"></section>
     </main>
-    <script src="./app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+        integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
+        crossorigin="anonymous"></script>
+    <script src="./js/app.js"></script>
 </body>
+
 </html>
