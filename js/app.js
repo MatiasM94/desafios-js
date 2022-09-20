@@ -230,14 +230,18 @@ const buscarEnDom = () => {
 buscarEnDom()
 
 // Actualizar/editar objeto dentro del array.
+const indice = () => {
+    let buscarIndice = productos.findIndex((producto => producto.id == numeroId));
+    return buscarIndice
+}
 const editarProducto = document.querySelector("#lista-productos");
 
 editarProducto.addEventListener("click", editarArray);
 
 function editarArray(event) {
-    let encontrarEnDom = event.target.parentNode.parentNode
-    let valorEnDom = encontrarEnDom
     if(event.target && event.target.innerHTML === "Editar Producto"){
+        let encontrarEnDom = event.target.parentNode.parentNode
+        let valorEnDom = encontrarEnDom
         numero = document.querySelector("#editarNumero").value = valorEnDom.querySelector(".numero").innerHTML;
         numeroId = document.querySelector("#editarNid").value = valorEnDom.querySelector(".numero-id").innerHTML;
         producto = document.querySelector("#editarNombre").value = valorEnDom.querySelector(".nombre").innerHTML;
@@ -246,14 +250,12 @@ function editarArray(event) {
         precio = document.querySelector("#editarPrecio").value = valorEnDom.querySelector(".precio").innerHTML;
     }
 
-    let buscarIndice = productos.findIndex((producto => producto.id == numeroId));
-
-    const formularioEditar = document.querySelector("#editarModal");
+    let formularioEditar = document.querySelector("#editarModal");
     formularioEditar.addEventListener("click", event => {
-        if(event.target && event.target.innerHTML === "Editar Producto"){
-        productos[buscarIndice] = {numero: document.querySelector("#editarNumero").value, id: document.querySelector("#editarNid").value, nombre: document.querySelector("#editarNombre").value.toLowerCase(), marca: document.querySelector("#editarMarca").value.toLowerCase(), cantidad: document.querySelector("#editarCantidad").value, precio: document.querySelector("#editarPrecio").value};
+        if(event.target && event.target.innerHTML === "Aceptar"){
+            productos[indice()] = {numero: document.querySelector("#editarNumero").value, id: document.querySelector("#editarNid").value, nombre: document.querySelector("#editarNombre").value.toLowerCase(), marca: document.querySelector("#editarMarca").value.toLowerCase(), cantidad: document.querySelector("#editarCantidad").value, precio: document.querySelector("#editarPrecio").value};
+        }
         mostrarProductos(productos)
         aJson(productos)
-        }
     })
 }
