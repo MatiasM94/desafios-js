@@ -54,8 +54,12 @@ main {
     margin: 1rem;
     padding: 10px;
 }
+form{
+    display: flex;
+    flex-direction: column;
+}
 input{
-    width: 15rem;
+    width: 20rem;
     margin: 10px 10px 10px 0;
 }
 .buscador {
