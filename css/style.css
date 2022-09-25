@@ -38,6 +38,15 @@ nav {
 main {
     background-color: #dfe8f1;
 }
+footer {
+    grid-column-start: 1;
+    grid-column-end: 7;
+}
+.footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .titulo {
     margin: 1.5rem 0 2rem 2rem;
 }
@@ -62,6 +71,10 @@ input{
     width: 20rem;
     margin: 10px 10px 10px 0;
 }
+.inputCheck{
+    width: fit-content;
+    margin: 0 10px 0 0;
+}
 .buscador {
     margin-left: 2rem;
 }
@@ -72,6 +85,13 @@ input{
     padding: 5px;
     border: rgba(128, 128, 128, 0.407) solid 1px;;
     border-radius: 7px;
+}
+.boton:hover {
+    background-color: #0c7a7e;
+}
+.botonSweet {
+    color: white;
+    background-color: #01949A;
 }
 .botones_ordenar {
     border: none;

@@ -18,11 +18,83 @@ class Cliente {
         this.nombre = nombre;
     }
 }
+
 // variable para ordenar el array segun cierta caracteristica, la utilizo como un interruptor.
 let ordenProducto = true;
-// Inicio la app con el array de productos del localStorage.
 
+// Le agrego estilo y atributos a los botones y funciones de sweetAlert2.
+const swalWithBootstrapButtons = Swal.mixin({
+    customClass: {
+        confirmButton: 'boton me-3 botonSweet',
+        cancelButton: 'btn btn-danger',
+    },
+    heightAuto: false,
+    buttonsStyling: false,
+})
+
+// funcion para recuperar el array de objetos del localStorage y convertirlo en formato js al iniciar la app y guardar en el array productos.
+const arrayJs = () => {
+    const productosEnStorage = JSON.parse(localStorage.getItem("listaProductos")) || []
+    for(const producto of productosEnStorage){
+        productos.push(new Producto(producto.numero, producto.id, producto.nombre, producto.marca, producto.cantidad, producto.precio));
+        agregarProducto(productos)
+    }
+}
+
+// Inicio la app con el array de productos recuperado del localStorage.
 arrayJs()
+
+// Funcion para crear un div con la informacion que voy a recibir del formulario y lo agrego en el html como hijo de un section.
+function agregarProducto(infoProducto){
+    const productoAgregado = document.createElement("div");
+    infoProducto.forEach(producto => {
+        productoAgregado.innerHTML = `<div><p class="numero">${producto.numero}</p></div><div><p class="numero-id">${producto.id}</p></div><div><p class="nombre">${producto.nombre}</p></div><div><p class="marca">${producto.marca}</p></div><div><p class="cantidad">${producto.cantidad}</p></div><div><p class="precio">${producto.precio}</p></div><div><p class="precioIva">${producto.precio*1.21}</p></div><div class="botones"><button type="button" class="boton boton-editar" data-bs-toggle="modal" data-bs-target="#editarModal">Editar Producto</button><button id="eliminar"><i class="bi bi-x-circle-fill"></i></button></div>`;
+        productoAgregado.className = "indice-lista__productos";
+        document.querySelector("#lista-productos").appendChild(productoAgregado);
+    })
+    Toastify({
+        text: "Producto Agregado",
+        className: "info",
+        style: {
+            "border-radius": "7px",
+            padding: "10px",
+            background: "#01949A",
+        }
+    }).showToast();
+}
+
+// Funcion para seleccionar los inputs del formulario y devolverles un value vacio(despues de agregar un producto) para seguir agregando productos.
+function limpiarInput() {
+    numero = document.querySelector("#numero").value;
+    numero = document.querySelector("#numero").value = (Number(numero) + 1);
+    numeroId = document.querySelector("#nId").value = "";
+    producto = document.querySelector("#producto").value = "";
+    marca = document.querySelector("#marca").value = "";
+    cantidad = document.querySelector("#cantidad").value = "";
+    precio = document.querySelector("#precio").value = "";
+}
+
+// Funcion para convertir el array de objetos en formato json y guardarlo en localStorage.
+function aJson(guardarArray) {
+    const productosJson = JSON.stringify(guardarArray);
+    localStorage.setItem("listaProductos", productosJson);
+}
+
+// Funcion para agregar opcion de cerrar la ventana despues de agregar un producto.
+const cerrarForm = (e) => {
+    let checkBox = document.querySelector("#check")
+    let addProducto = document.querySelector("#btnAgregarProducto")
+    if(e.target.type == "checkbox"){
+        if(checkBox.value == "on"){
+            addProducto.removeAttribute("data-bs-dismiss");
+            checkBox.setAttribute("value", "check");
+        }
+        else {
+            addProducto.setAttribute("data-bs-dismiss", "modal");
+            checkBox.removeAttribute("value");
+        }
+    }
+}
 
 // Accedo al formulario para capturar los datos despues del submit.
 const formularioProductos = document.querySelector(".modal");
@@ -42,41 +114,9 @@ function formulario(e) {
     limpiarInput()
     aJson(productos)
     }
+    cerrarForm(e)
 }
-// Creo un div con la informacion recibida del formulario y lo agrego en el html como hijo de un section.
-function agregarProducto(infoProducto){
-    const productoAgregado = document.createElement("div");
-    infoProducto.forEach(producto => {
-        productoAgregado.innerHTML = `<div><p class="numero">${producto.numero}</p></div><div><p class="numero-id">${producto.id}</p></div><div><p class="nombre">${producto.nombre}</p></div><div><p class="marca">${producto.marca}</p></div><div><p class="cantidad">${producto.cantidad}</p></div><div><p class="precio">${producto.precio}</p></div><div><p class="precioIva">${producto.precio*1.21}</p></div><div class="botones"><button type="button" class="boton boton-editar" data-bs-toggle="modal" data-bs-target="#editarModal">Editar Producto</button><button id="eliminar"><i class="bi bi-x-circle-fill"></i></button></div>`;
-        productoAgregado.className = "indice-lista__productos";
-        document.querySelector("#lista-productos").appendChild(productoAgregado);
-    })
-}
-// selecciono los imputs y les devuelvo un value vacio.
-function limpiarInput() {
-    numero = document.querySelector("#numero").value;
-    numero = document.querySelector("#numero").value = (Number(numero) + 1);
-    numeroId = document.querySelector("#nId").value = "";
-    producto = document.querySelector("#producto").value = "";
-    marca = document.querySelector("#marca").value = "";
-    cantidad = document.querySelector("#cantidad").value = "";
-    precio = document.querySelector("#precio").value = "";
-}
-// Convierto el array de objetos en formato json y lo guardo en localStorage.
-function aJson(guardarArray) {
-    const productosJson = JSON.stringify(guardarArray);
-    localStorage.setItem("listaProductos", productosJson);
-}
-// Recupero el array de objetos en formato js al iniciar la app y lo guardo en el array productos.
-function arrayJs(){
-    const productosEnStorage = JSON.parse(localStorage.getItem("listaProductos"));
-    if (productosEnStorage){
-        for(const producto of productosEnStorage){
-            productos.push(new Producto(producto.numero, producto.id, producto.nombre, producto.marca, producto.cantidad, producto.precio));
-            agregarProducto(productos)
-        }
-    }
-}
+
 // Funcion para mostrar el array despues de ordenar la lista ó modificar/eliminar un producto ó buscar un producto.
 const mostrarProductos = (mostrarArray) => {
     let listaDom = document.querySelector("#lista-productos").innerHTML = "";
@@ -88,133 +128,136 @@ const mostrarProductos = (mostrarArray) => {
     })
 }
 
-// Selecciono un section del html y le agrego un evento "click" con un condicional para ejecutar la funcion con click en boton.
-//Elimino del dom y del array el producto con evento "click" y actualizo el localStorage.
+//Funcion para eliminar del dom y del array el producto y actualizar el localStorage.
+const eliminarProducto = (enDom, enDomId) => {
+    const resultado = productos.find((producto) => producto.id == enDomId);
+    let indice = productos.indexOf(resultado);
+
+    productos.splice(indice, 1)
+    enDom.remove();
+    aJson(productos)
+}
+
+// Agrego SweetAlert + Toastify para eliminar producto.
+const eliminarSweet = (enDom, enDomId) =>{
+    swalWithBootstrapButtons.fire({
+        title: '¿Quieres elimar este producto?',
+        text: "No podras restaurarlo si te arrepientes!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Confirmar',
+        cancelButtonText: 'Cancelar',
+})
+    .then((result) => {
+        if (result.isConfirmed) {
+            eliminarProducto(enDom, enDomId)
+            Toastify({
+                text: "Producto Eliminado",
+                className: "info",
+                style: {
+                    "border-radius": "7px",
+                    padding: "10px",
+                    background: "#01949A",
+                }
+            }).showToast();
+        }
+    })
+}
+
+// Selecciono un section del html y le agrego un evento "click" para eliminar el producto del dom y del array.
 const botonEliminar = document.querySelector("#lista-productos");
 botonEliminar.addEventListener("click", event => {
-    if(event.target && event.target.tagName === "I"){
+    if (event.target.tagName === "I"){
         let encontrarEnDom = event.target.parentNode.parentNode.parentNode;
         let valorEnDom = encontrarEnDom.querySelector(".numero-id").innerHTML;
-
-        const resultado = productos.find((producto) => producto.id == valorEnDom);
-
-        let indice = productos.indexOf(resultado);
-
-        productos.splice(indice, 1)
-        event.target.parentNode.parentNode.parentNode.remove();
-        aJson(productos)
+        eliminarSweet(encontrarEnDom, valorEnDom)
     }
 })
 
-// funcion para ordenar la lista de productos segun conveniencia.
+// funciones para ordenar la lista de productos segun conveniencia.
+const ordenAlfabeticoNombreA = (arrayProductos) =>{
+    arrayProductos.sort((a, b) => {
+        if (a.nombre.toLowerCase() > b.nombre.toLowerCase()) {
+            return 1;
+        }
+        else if (a.nombre.toLowerCase() < b.nombre.toLowerCase()){
+            return -1;
+        }
+        else{
+            return 0;
+        }
+    })
+    ordenProducto = false
+}
+const ordenAlfabeticoNombreZ = (arrayProductos) =>{
+    arrayProductos.sort((a, b) => {
+        if (a.nombre.toLowerCase() < b.nombre.toLowerCase()) {
+            return 1;
+        }
+        else if (a.nombre.toLowerCase() > b.nombre.toLowerCase()){
+            return -1;
+        }
+        else{
+            return 0;
+        }
+    })
+    ordenProducto = true
+}
+const ordenAlfabeticoMarcaA = (arrayProductos) =>{
+    arrayProductos.sort((a, b) => {
+        if (a.marca.toLowerCase() > b.marca.toLowerCase()) {
+            return 1;
+        }
+        else if (a.marca.toLowerCase() < b.marca.toLowerCase()){
+            return -1;
+        }
+        else{
+            return 0;
+        }
+    })
+    ordenProducto = false
+}
+const ordenAlfabeticoMarcaZ = (arrayProductos) =>{
+    arrayProductos.sort((a, b) => {
+        if (a.marca.toLowerCase() < b.marca.toLowerCase()) {
+            return 1;
+        }
+        else if (a.marca.toLowerCase() > b.marca.toLowerCase()){
+            return -1;
+        }
+        else{
+            return 0;
+        }
+    })
+    ordenProducto = true
+}
+// Casos para ordenar la lista.
 const botonesOrdenar = document.querySelector("#ordenarLista")
 botonesOrdenar.addEventListener("click", event => {
-    switch(event.target && event.target.innerHTML){
+    switch(event.target.innerHTML){
         case "Número":
-            if(ordenProducto == true){
-                ordenProducto = false;
-                productos.sort((a, b) => a.numero - b.numero);
-            }
-            else{
-                ordenProducto = true;
-                productos.sort((a, b) => b.numero - a.numero);
-            }
-            mostrarProductos(productos)
+            ordenProducto == true ? productos.sort((a, b) => a.numero - b.numero) && (ordenProducto = false) : productos.sort((a, b) => b.numero - a.numero) && (ordenProducto = true)
+            mostrarProductos(productos);
             break;
         case "ID":
-            if(ordenProducto == true){
-                ordenProducto = false;
-                productos.sort((a, b) => a.id - b.id);
-            }
-            else{
-                ordenProducto = true;
-                productos.sort((a, b) => b.id - a.id);
-            }
-            mostrarProductos(productos)
+            ordenProducto == true ? productos.sort((a, b) => a.id - b.id) && (ordenProducto = false) : productos.sort((a, b) => b.id - a.id) && (ordenProducto = true)
+            mostrarProductos(productos);
             break;
         case "Producto":
-            if(ordenProducto == true){
-                ordenProducto = false;
-                productos.sort((a, b) => {
-                    if (a.nombre.toLowerCase() > b.nombre.toLowerCase()) {
-                        return 1;
-                    }
-                    else if (a.nombre.toLowerCase() < b.nombre.toLowerCase()){
-                        return -1;
-                    }
-                    else{
-                        return 0;
-                    } 
-                })
-            }
-            else{
-                ordenProducto = true;
-                productos.sort((a, b) => {
-                if (a.nombre.toLowerCase() < b.nombre.toLowerCase()) {
-                    return 1;
-                }
-                else if (a.nombre.toLowerCase() > b.nombre.toLowerCase()){
-                    return -1;
-                }
-                else{
-                    return 0;
-                }
-                })
-            }
-            mostrarProductos(productos)
+            ordenProducto == true ? ordenAlfabeticoNombreA(productos) : ordenAlfabeticoNombreZ(productos)
+            mostrarProductos(productos);
             break;
         case "Marca":
-            if(ordenProducto == true){
-                ordenProducto = false;
-                productos.sort((a, b) => {
-                    if (a.marca.toLowerCase() > b.marca.toLowerCase()) {
-                        return 1;
-                    }
-                    else if (a.marca.toLowerCase() < b.marca.toLowerCase()){
-                        return -1;
-                    }
-                    else{
-                        return 0;
-                    } 
-            })
-            }
-            else{
-                ordenProducto = true;
-                productos.sort((a, b) => {
-                if (a.marca.toLowerCase() < b.marca.toLowerCase()) {
-                    return 1;
-                }
-                else if (a.marca.toLowerCase() > b.marca.toLowerCase()){
-                    return -1;
-                }
-                else{
-                    return 0;
-                }
-                })
-            }
-            mostrarProductos(productos)
+            ordenProducto == true ? ordenAlfabeticoMarcaA(productos) : ordenAlfabeticoMarcaZ(productos)
+            mostrarProductos(productos);
             break;
         case "Cantidad":
-            if(ordenProducto == true){
-                ordenProducto = false;
-                productos.sort((a, b) => a.cantidad - b.cantidad);
-            }
-            else{
-                ordenProducto = true;
-                productos.sort((a, b) => b.cantidad - a.cantidad);
-            }
-            mostrarProductos(productos)
+            ordenProducto == true ? productos.sort((a, b) => a.cantidad - b.cantidad) && (ordenProducto = false) : productos.sort((a, b) => b.cantidad - a.cantidad) && (ordenProducto = true)
+            mostrarProductos(productos);
             break;
         case "Precio":
-            if(ordenProducto == true){
-                ordenProducto = false;
-                productos.sort((a, b) => a.precio - b.precio);
-            }
-            else{
-                ordenProducto = true;
-                productos.sort((a, b) => b.precio - a.precio);
-            }
-            mostrarProductos(productos)
+            ordenProducto == true ? productos.sort((a, b) => a.precio - b.precio) && (ordenProducto = false) : productos.sort((a, b) => b.precio - a.precio) && (ordenProducto = true)
+            mostrarProductos(productos);
             break;
     }
 })
@@ -229,11 +272,38 @@ const buscarEnDom = () => {
 }
 buscarEnDom()
 
-// Actualizar/editar objeto dentro del array.
+// Funciones para actualizar/editar objeto dentro del array.
 const indice = () => {
     let buscarIndice = productos.findIndex((producto => producto.id == numeroId));
     return buscarIndice
 }
+const editar = () => {
+    (productos[indice()] = {numero: document.querySelector("#editarNumero").value,
+                            id: document.querySelector("#editarNid").value,
+                            nombre: document.querySelector("#editarNombre").value.toLowerCase(),
+                            marca: document.querySelector("#editarMarca").value.toLowerCase(),
+                            cantidad: document.querySelector("#editarCantidad").value,
+                            precio: document.querySelector("#editarPrecio").value});
+    mostrarProductos(productos)
+    aJson(productos)
+}
+// Agrego un sweetAlert para confirmar edicion.
+const editarSweet = () => {
+    swalWithBootstrapButtons.fire({
+        title: '¿Quieres guardar los cambios?',
+        icon: "question",
+        showCancelButton: true,
+        confirmButtonText: 'Guardar',
+        cancelButtonText: 'Cancelar'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            editar()
+            swalWithBootstrapButtons.fire('Producto Actualizado', '', 'success')
+        }
+    })
+}
+
+// Selecciono el seccion de los productos y le agrego un evento para ejecutar las funciones que editan el producto
 const editarProducto = document.querySelector("#lista-productos");
 
 editarProducto.addEventListener("click", editarArray);
@@ -242,6 +312,7 @@ function editarArray(event) {
     if(event.target && event.target.innerHTML === "Editar Producto"){
         let encontrarEnDom = event.target.parentNode.parentNode
         let valorEnDom = encontrarEnDom
+        // Tomo los datos del producto seleccionado y los imprimo en los input del modal.
         numero = document.querySelector("#editarNumero").value = valorEnDom.querySelector(".numero").innerHTML;
         numeroId = document.querySelector("#editarNid").value = valorEnDom.querySelector(".numero-id").innerHTML;
         producto = document.querySelector("#editarNombre").value = valorEnDom.querySelector(".nombre").innerHTML;
@@ -249,13 +320,9 @@ function editarArray(event) {
         cantidad = document.querySelector("#editarCantidad").value = valorEnDom.querySelector(".cantidad").innerHTML;
         precio = document.querySelector("#editarPrecio").value = valorEnDom.querySelector(".precio").innerHTML;
     }
-
+    // Tómo el formulario del modal y ejecuto la funcion editar.
     let formularioEditar = document.querySelector("#editarModal");
     formularioEditar.addEventListener("click", event => {
-        if(event.target && event.target.innerHTML === "Aceptar"){
-            productos[indice()] = {numero: document.querySelector("#editarNumero").value, id: document.querySelector("#editarNid").value, nombre: document.querySelector("#editarNombre").value.toLowerCase(), marca: document.querySelector("#editarMarca").value.toLowerCase(), cantidad: document.querySelector("#editarCantidad").value, precio: document.querySelector("#editarPrecio").value};
-        }
-        mostrarProductos(productos)
-        aJson(productos)
+        event.target && event.target.innerHTML === "Aceptar" && editarSweet()
     })
 }
