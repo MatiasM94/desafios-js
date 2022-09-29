@@ -22,6 +22,30 @@ class Cliente {
 // variable para ordenar el array segun cierta caracteristica, la utilizo como un interruptor.
 let ordenProducto = true;
 
+const completarBarra = () => {
+    Swal.fire({
+        showConfirmButton: false,
+        heightAuto: false,
+        timer: 2000,
+        title: "Stockment",
+        html: `<div class="progress">
+        <div id="barraProgreso" class="progress-bar progress-bar-striped" role="progressbar" aria-label="Default striped example" style="width: 25%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>`,
+        backdrop: `
+        #004369
+        `,
+    })
+    let barraProgreso = document.querySelector("#barraProgreso")
+    let progreso = 0
+    const cargarIntervalo = setInterval(() => {
+    progreso += 1
+    barraProgreso.style.width = progreso + "%"
+    if (progreso >= 100){
+        clearInterval(cargarIntervalo)
+    }}, 10)
+}
+
+completarBarra()
 // Le agrego estilo y atributos a los botones y funciones de sweetAlert2.
 const swalWithBootstrapButtons = Swal.mixin({
     customClass: {
@@ -48,7 +72,7 @@ arrayJs()
 function agregarProducto(infoProducto){
     const productoAgregado = document.createElement("div");
     infoProducto.forEach(producto => {
-        productoAgregado.innerHTML = `<div><p class="numero">${producto.numero}</p></div><div><p class="numero-id">${producto.id}</p></div><div><p class="nombre">${producto.nombre}</p></div><div><p class="marca">${producto.marca}</p></div><div><p class="cantidad">${producto.cantidad}</p></div><div><p class="precio">${producto.precio}</p></div><div><p class="precioIva">${producto.precio*1.21}</p></div><div class="botones"><button type="button" class="boton boton-editar" data-bs-toggle="modal" data-bs-target="#editarModal">Editar Producto</button><button id="eliminar"><i class="bi bi-x-circle-fill"></i></button></div>`;
+        productoAgregado.innerHTML = `<div class="contenedorNumero"><p class="numero">${producto.numero}</p></div><div class="contenedorId"><p class="numero-id">${producto.id}</p></div><div><p class="nombre">${producto.nombre}</p></div><div class="contenedorMarca"><p class="marca">${producto.marca}</p></div><div><p class="cantidad">${producto.cantidad}</p></div><div><p class="precio">${producto.precio}</p></div><div class="contenedorPrecioIva"><p class="precioIva">${producto.precio*1.21}</p></div><div class="botones"><button type="button" class="boton boton-editar" data-bs-toggle="modal" data-bs-target="#editarModal">Editar</button><button id="eliminar"><i class="bi bi-x-circle-fill"></i></button></div>`;
         productoAgregado.className = "indice-lista__productos";
         document.querySelector("#lista-productos").appendChild(productoAgregado);
     })
@@ -97,7 +121,7 @@ const cerrarForm = (e) => {
 }
 
 // Accedo al formulario para capturar los datos despues del submit.
-const formularioProductos = document.querySelector(".modal");
+const formularioProductos = document.querySelector(".modal-add");
 
 formularioProductos.addEventListener("click", formulario);
 
@@ -122,7 +146,7 @@ const mostrarProductos = (mostrarArray) => {
     let listaDom = document.querySelector("#lista-productos").innerHTML = "";
     mostrarArray.forEach(producto => {
         const productoAgregado = document.createElement("div");
-        productoAgregado.innerHTML = `<div><p class="numero">${producto.numero}</p></div><div><p class="numero-id">${producto.id}</p></div><div><p class="nombre">${producto.nombre}</p></div><div><p class="marca">${producto.marca}</p></div><div><p class="cantidad">${producto.cantidad}</p></div><div><p class="precio">${producto.precio}</p></div><div><p class="precioIva">${producto.precio*1.21}</p></div><div class="botones"><button type="button" class="boton boton-editar" data-bs-toggle="modal" data-bs-target="#editarModal">Editar Producto</button><button id="eliminar"><i class="bi bi-x-circle-fill"></i></button></div>`;
+        productoAgregado.innerHTML = `<div class="contenedorNumero"><p class="numero">${producto.numero}</p></div><div class="contenedorId"><p class="numero-id">${producto.id}</p></div><div><p class="nombre">${producto.nombre}</p></div><div class="contenedorMarca"><p class="marca">${producto.marca}</p></div><div><p class="cantidad">${producto.cantidad}</p></div><div><p class="precio">${producto.precio}</p></div><div class="contenedorPrecioIva"><p class="precioIva">${producto.precio*1.21}</p></div><div class="botones"><button type="button" class="boton boton-editar" data-bs-toggle="modal" data-bs-target="#editarModal">Editar</button><button id="eliminar"><i class="bi bi-x-circle-fill"></i></button></div>`;
         productoAgregado.className = "indice-lista__productos";
         document.querySelector("#lista-productos").appendChild(productoAgregado);
     })
@@ -309,7 +333,7 @@ const editarProducto = document.querySelector("#lista-productos");
 editarProducto.addEventListener("click", editarArray);
 
 function editarArray(event) {
-    if(event.target && event.target.innerHTML === "Editar Producto"){
+    if(event.target && event.target.innerHTML === "Editar"){
         let encontrarEnDom = event.target.parentNode.parentNode
         let valorEnDom = encontrarEnDom
         // Tomo los datos del producto seleccionado y los imprimo en los input del modal.
@@ -326,3 +350,6 @@ function editarArray(event) {
         event.target && event.target.innerHTML === "Aceptar" && editarSweet()
     })
 }
+
+
+

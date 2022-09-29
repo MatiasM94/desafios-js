@@ -15,25 +15,58 @@
 
 <body>
     <header class="encabezado__lateral">
-        <h1 class="logo">Stockment</h1>
-        <nav>
+        <section class="navDesktop">
+            <h1 class="logo">Stockment</h1>
             <ul>
                 <li><a href="#" class="links">Productos</a></li>
                 <li><a href="#" class="links">Clientes</a></li>
                 <li><a href="#" class="links">Agenda</a></li>
             </ul>
-        </nav>
+        </section>
+        <section>
+            <nav class="navbar navbar-dark">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#">Stockment</a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar"
+                        aria-labelledby="offcanvasDarkNavbarLabel">
+                        <div class="offcanvas-header">
+                            <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Stockment</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body">
+                            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="#">Productos</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Clientes</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Agenda</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </section>
     </header>
     <main id="content">
         <h2 class="titulo">Inventario</h2>
         <section class="interaccion">
             <!-- modal para agregar productos -->
-            <button type="button" class="boton" data-bs-toggle="modal" data-bs-target="#exampleModal">Agregar Producto</button>
+            <button type="button" class="boton" data-bs-toggle="modal" data-bs-target="#exampleModal">Agregar
+                Producto</button>
             <div class="buscador">
-                <label for="buscar">Buscar:</label>
-                <input type="text" id="buscar" placeholder="Ingrese el nombre del producto">
+                <label class="labelBuscar" for="buscar">Buscar:</label>
+                <input type="text" id="buscar" placeholder="Buscar por producto...">
             </div>
-            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+            <div class="modal fade modal-add" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
                 aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
@@ -55,7 +88,8 @@
                                 <input type="text" id="cantidad">
                                 <label for="precio">Precio:</label>
                                 <input type="text" id="precio">
-                                <label for="check"><input class="inputCheck" type="checkbox" id="check" value="check">Cerrar ventana al agregar un producto.</label>
+                                <label for="check">Cerrar ventana al agregar un producto.</label>
+                                <input class="inputCheck" type="checkbox" id="check" value="check">
                             </form>
                         </div>
                         <div class="modal-footer">
@@ -71,7 +105,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="editarModalLabel">Agregar producto</h5>
+                            <h5 class="modal-title" id="editarModalLabel">Editar producto</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body addproducto">
@@ -99,16 +133,16 @@
             </div>
         </section>
         <section id="ordenarLista">
-            <div>
+            <div class="btn_numero">
                 <button class="botones_ordenar">Número</button>
             </div>
-            <div>
+            <div class="btn_id">
                 <button class="botones_ordenar">ID</button>
             </div>
             <div>
                 <button class="botones_ordenar">Producto</button>
             </div>
-            <div>
+            <div class="btn_marca">
                 <button class="botones_ordenar">Marca</button>
             </div>
             <div>
@@ -117,7 +151,7 @@
             <div>
                 <button class="botones_ordenar">Precio</button>
             </div>
-            <div>
+            <div class="btn_precioIva">
                 <button class="botones_ordenar">Precio IVA</button>
             </div>
             <div class="eliminar-edit">
