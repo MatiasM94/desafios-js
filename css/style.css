@@ -5,10 +5,20 @@
 }
 ul {
     list-style: none;
+    padding: 0;
+    margin-top: 3rem;
+}
+li{
+    width: 100%;
 }
 a {
     text-decoration: none;
     color: white;
+    width: 100%;
+}
+a:hover{
+    color: white;
+    background-color: #02314d;
 }
 p{
     margin: 0 3px;
@@ -18,18 +28,22 @@ body {
     height: 100vh;
 }
 .encabezado__lateral {
+    width: 15%;
     background-color: #004369;
     color: white;
 }
 .logo {
-    margin-top: 1rem;
+    font-size: 2rem;
+    margin: 1rem 0;
     text-align: center;
 }
 .links {
-    display: flex;
+    display: inline-block;
     margin-bottom: 2rem;
-    text-align: left;
-    justify-content: center;
+    padding: 10px 0 10px 1.2rem;
+}
+.bi-boxes, .bi-person-hearts, .bi-calendar-check {
+    margin-right: 10px;
 }
 main {
     background-color: #dfe8f1;
@@ -144,6 +158,12 @@ input{
     body{
         flex-direction: column;
     }
+    main{
+        height: 100vh;
+    }
+    .encabezado__lateral {
+        width: auto;
+    }
     .navDesktop{
         display: none;
     }
@@ -183,4 +203,26 @@ input{
     .bi-x-circle-fill{
         margin-right: 3px;
     }
+}
+
+/* Aca empieza clientes.html */
+#ordenarClientes {
+    display: grid;
+    grid-template-columns: 1.8fr 1fr 1fr 1.4fr 1.8fr;
+    background-color: rgb(245, 245, 245);
+    margin: 0 1rem;
+    padding: 1rem 0;
+    border: rgba(128, 128, 128, 0.407) solid 1px;
+    border-radius: 5px;
+    text-align: center;
+}
+.indice-lista__clientes {
+    display: grid;
+    background-color: rgb(245, 245, 245);
+    align-items: center;
+    grid-template-columns: 1.8fr 1fr 1fr 1.4fr 1.8fr;
+    border: rgba(128, 128, 128, 0.407) solid 1px;
+    margin: 0 1rem 0;
+    padding: 5px 0;
+    text-align: center;
 }

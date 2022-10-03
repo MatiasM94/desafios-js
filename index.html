@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <link rel="stylesheet" href="./css/style.css">
-    <title>Desafios Js</title>
+    <title>Inventario | Stockment</title>
 </head>
 
 <body>
@@ -18,15 +18,15 @@
         <section class="navDesktop">
             <h1 class="logo">Stockment</h1>
             <ul>
-                <li><a href="#" class="links">Productos</a></li>
-                <li><a href="#" class="links">Clientes</a></li>
-                <li><a href="#" class="links">Agenda</a></li>
+                <li><a href="#" class="links"><i class="bi bi-boxes"></i>Productos</a></li>
+                <li><a href="./paginas/clientes.html" class="links"><i class="bi bi-person-hearts"></i>Clientes</a></li>
+                <li><a href="#" class="links"><i class="bi bi-calendar-check"></i>Agenda</a></li>
             </ul>
         </section>
         <section>
             <nav class="navbar navbar-dark">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="#">Stockment</a>
+                    <h1>Stockment</h1>
                     <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
                         data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
                         <span class="navbar-toggler-icon"></span>
@@ -44,7 +44,7 @@
                                     <a class="nav-link active" aria-current="page" href="#">Productos</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Clientes</a>
+                                    <a class="nav-link" href="./paginas/clientes.html">Clientes</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">Agenda</a>
@@ -63,7 +63,7 @@
             <button type="button" class="boton" data-bs-toggle="modal" data-bs-target="#exampleModal">Agregar
                 Producto</button>
             <div class="buscador">
-                <label class="labelBuscar" for="buscar">Buscar:</label>
+                <label class="labelBuscar" for="buscar"><i class="bi bi-search"></i></label>
                 <input type="text" id="buscar" placeholder="Buscar por producto...">
             </div>
             <div class="modal fade modal-add" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"

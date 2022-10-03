@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <title>Clientes | Stockment</title>
+</head>
+<body>
+    <header class="encabezado__lateral">
+        <section class="navDesktop">
+            <h1 class="logo">Stockment</h1>
+            <ul>
+                <li><a href="../index.html" class="links"><i class="bi bi-boxes"></i>Productos</a></li>
+                <li><a href="#" class="links"><i class="bi bi-person-hearts"></i>Clientes</a></li>
+                <li><a href="#" class="links"><i class="bi bi-calendar-check"></i>Agenda</a></li>
+            </ul>
+        </section>
+        <section>
+            <nav class="navbar navbar-dark">
+                <div class="container-fluid">
+                    <h1>Stockment</h1>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas"
+                        data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar"
+                        aria-labelledby="offcanvasDarkNavbarLabel">
+                        <div class="offcanvas-header">
+                            <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">Stockment</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body">
+                            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="../index.html">Productos</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Clientes</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Agenda</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </section>
+    </header>
+    <main id="content">
+        <h2 class="titulo">Clientes</h2>
+        <section class="interaccion">
+            <div class="buscador">
+                <label class="labelBuscar" for="buscar"><i class="bi bi-search"></i></label>
+                <input type="text" id="buscar" placeholder="Buscar por Apellidos...">
+            </div>
+        </section>
+        <section id="ordenarClientes">
+            <div class="btn_id">
+                <button class="botones_ordenar">ID</button>
+            </div>
+            <div class="btn_id">
+                <button class="botones_ordenar">Apellidos</button>
+            </div>
+            <div>
+                <button class="botones_ordenar">Nombres</button>
+            </div>
+            <div class="btn_marca">
+                <button class="botones_ordenar">Phone</button>
+            </div>
+            <div>
+                <button class="botones_ordenar">Email</button>
+            </div>
+        </section>
+        <section id="lista-clientes"></section>
+    </main>
+
+    <script src="../sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
+        integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.min.js"
+        integrity="sha384-7VPbUDkoPSGFnVtYi0QogXtr74QeVeeIs99Qfg5YCF+TidwNdjvaKZX19NZ/e6oz"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+    <script src="../js/clientes.js"></script>
+</body>
+</html>

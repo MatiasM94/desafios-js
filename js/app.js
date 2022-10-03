@@ -21,12 +21,12 @@ class Cliente {
 
 // variable para ordenar el array segun cierta caracteristica, la utilizo como un interruptor.
 let ordenProducto = true;
-
+// Pantalla de carga de la app.
 const completarBarra = () => {
     Swal.fire({
         showConfirmButton: false,
         heightAuto: false,
-        timer: 2000,
+        timer: 1200,
         title: "Stockment",
         html: `<div class="progress">
         <div id="barraProgreso" class="progress-bar progress-bar-striped" role="progressbar" aria-label="Default striped example" style="width: 25%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
@@ -35,17 +35,19 @@ const completarBarra = () => {
         #004369
         `,
     })
-    let barraProgreso = document.querySelector("#barraProgreso")
-    let progreso = 0
+    sessionStorage.setItem("pantallaDeCarga", false)
+    let barraProgreso = document.querySelector("#barraProgreso");
+    let progreso = 0;
     const cargarIntervalo = setInterval(() => {
-    progreso += 1
-    barraProgreso.style.width = progreso + "%"
+    progreso += 5;
+    barraProgreso.style.width = progreso + "%";
     if (progreso >= 100){
         clearInterval(cargarIntervalo)
     }}, 10)
 }
+// Inicio de la app.
+sessionStorage.pantallaDeCarga != "false" && completarBarra()
 
-completarBarra()
 // Le agrego estilo y atributos a los botones y funciones de sweetAlert2.
 const swalWithBootstrapButtons = Swal.mixin({
     customClass: {
@@ -56,16 +58,26 @@ const swalWithBootstrapButtons = Swal.mixin({
     buttonsStyling: false,
 })
 
+// Funcion para mostrar el array despues de ordenar la lista ó modificar/eliminar un producto ó buscar un producto.
+const mostrarProductos = (mostrarArray) => {
+    let listaDom = document.querySelector("#lista-productos").innerHTML = "";
+    mostrarArray.forEach(producto => {
+        const productoAgregado = document.createElement("div");
+        productoAgregado.innerHTML = `<div class="contenedorNumero"><p class="numero">${producto.numero}</p></div><div class="contenedorId"><p class="numero-id">${producto.id}</p></div><div><p class="nombre">${producto.nombre}</p></div><div class="contenedorMarca"><p class="marca">${producto.marca}</p></div><div><p class="cantidad">${producto.cantidad}</p></div><div><p class="precio">${producto.precio}</p></div><div class="contenedorPrecioIva"><p class="precioIva">${producto.precio*1.21}</p></div><div class="botones"><button type="button" class="boton boton-editar" data-bs-toggle="modal" data-bs-target="#editarModal">Editar</button><button id="eliminar"><i class="bi bi-x-circle-fill"></i></button></div>`;
+        productoAgregado.className = "indice-lista__productos";
+        document.querySelector("#lista-productos").appendChild(productoAgregado);
+    })
+}
 // funcion para recuperar el array de objetos del localStorage y convertirlo en formato js al iniciar la app y guardar en el array productos.
 const arrayJs = () => {
     const productosEnStorage = JSON.parse(localStorage.getItem("listaProductos")) || []
     for(const producto of productosEnStorage){
         productos.push(new Producto(producto.numero, producto.id, producto.nombre, producto.marca, producto.cantidad, producto.precio));
-        agregarProducto(productos)
     }
+    mostrarProductos(productos)
 }
 
-// Inicio la app con el array de productos recuperado del localStorage.
+// Cargo el array de productos recuperado del localStorage.
 arrayJs()
 
 // Funcion para crear un div con la informacion que voy a recibir del formulario y lo agrego en el html como hijo de un section.
@@ -119,6 +131,14 @@ const cerrarForm = (e) => {
         }
     }
 }
+const existeId = (comparar) =>{
+    const resultado = productos.some((id) => id.id == comparar)
+    return resultado
+}
+const existeNumero = (comparar) => {
+    const resultado = productos.some((id) => id.numero == comparar)
+    return resultado
+}
 
 // Accedo al formulario para capturar los datos despues del submit.
 const formularioProductos = document.querySelector(".modal-add");
@@ -133,23 +153,18 @@ function formulario(e) {
     let marca = document.querySelector("#marca").value.toLowerCase();
     let cantidad = document.querySelector("#cantidad").value.toLowerCase();
     let precio = document.querySelector("#precio").value.toLowerCase();
+
+    if(!existeId(numeroId) && !existeNumero(numero)){
     productos.push(new Producto(numero, numeroId, producto, marca, cantidad, precio));
     agregarProducto(productos)
     limpiarInput()
     aJson(productos)
+    }else {
+        // Para el proyecto final voy a agregar una alerta en el form para advertir que el número o id que se quiere agregar ya existe.
+        console.log("Producto en existencia")
+    }
     }
     cerrarForm(e)
-}
-
-// Funcion para mostrar el array despues de ordenar la lista ó modificar/eliminar un producto ó buscar un producto.
-const mostrarProductos = (mostrarArray) => {
-    let listaDom = document.querySelector("#lista-productos").innerHTML = "";
-    mostrarArray.forEach(producto => {
-        const productoAgregado = document.createElement("div");
-        productoAgregado.innerHTML = `<div class="contenedorNumero"><p class="numero">${producto.numero}</p></div><div class="contenedorId"><p class="numero-id">${producto.id}</p></div><div><p class="nombre">${producto.nombre}</p></div><div class="contenedorMarca"><p class="marca">${producto.marca}</p></div><div><p class="cantidad">${producto.cantidad}</p></div><div><p class="precio">${producto.precio}</p></div><div class="contenedorPrecioIva"><p class="precioIva">${producto.precio*1.21}</p></div><div class="botones"><button type="button" class="boton boton-editar" data-bs-toggle="modal" data-bs-target="#editarModal">Editar</button><button id="eliminar"><i class="bi bi-x-circle-fill"></i></button></div>`;
-        productoAgregado.className = "indice-lista__productos";
-        document.querySelector("#lista-productos").appendChild(productoAgregado);
-    })
 }
 
 //Funcion para eliminar del dom y del array el producto y actualizar el localStorage.
@@ -302,14 +317,14 @@ const indice = () => {
     return buscarIndice
 }
 const editar = () => {
-    (productos[indice()] = {numero: document.querySelector("#editarNumero").value,
+    productos[indice()] = {numero: document.querySelector("#editarNumero").value,
                             id: document.querySelector("#editarNid").value,
                             nombre: document.querySelector("#editarNombre").value.toLowerCase(),
                             marca: document.querySelector("#editarMarca").value.toLowerCase(),
                             cantidad: document.querySelector("#editarCantidad").value,
-                            precio: document.querySelector("#editarPrecio").value});
-    mostrarProductos(productos)
-    aJson(productos)
+                            precio: document.querySelector("#editarPrecio").value};
+    mostrarProductos(productos);
+    aJson(productos);
 }
 // Agrego un sweetAlert para confirmar edicion.
 const editarSweet = () => {
@@ -347,9 +362,8 @@ function editarArray(event) {
     // Tómo el formulario del modal y ejecuto la funcion editar.
     let formularioEditar = document.querySelector("#editarModal");
     formularioEditar.addEventListener("click", event => {
-        event.target && event.target.innerHTML === "Aceptar" && editarSweet()
+        event.target.innerHTML === "Aceptar" && editarSweet()
     })
 }
-
 
 
