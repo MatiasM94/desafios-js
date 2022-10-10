@@ -163,6 +163,10 @@ input{
     padding: 5px 0;
     text-align: center;
 }
+.contenedorPrecio, .contenedorPrecioIva {
+    display: flex;
+    justify-content: center;
+}
 .navbar {
     display: none;
 }
