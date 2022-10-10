@@ -77,25 +77,26 @@
                         <div class="modal-body addproducto">
                             <form id="agregarProducto" action="">
                                 <label for="numero">Número:</label>
-                                <input id="numero" type="text" value="1">
+                                <input id="numero" name="numero" type="text" required>
                                 <label for="nId">ID:</label>
-                                <input type="text" id="nId">
+                                <input type="text" id="nId" name="nId" required>
                                 <label for="producto">Producto:</label>
-                                <input type="text" id="producto">
+                                <input type="text" name="producto" id="producto" required>
                                 <label for="marca">Marca:</label>
-                                <input type="text" id="marca">
+                                <input type="text" id="marca" required>
                                 <label for="cantidad">Cantidad:</label>
-                                <input type="text" id="cantidad">
+                                <input type="text" id="cantidad" required>
                                 <label for="precio">Precio:</label>
-                                <input type="text" id="precio">
+                                <input type="text" id="precio" required>
                                 <label for="check">Cerrar ventana al agregar un producto.</label>
                                 <input class="inputCheck" type="checkbox" id="check" value="check">
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                                    <button type="submit" class="btn boton" id="btnAgregarProducto">Agregar Producto</button>
+                                </div>
                             </form>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-primary" id="btnAgregarProducto">Agregar Producto</button>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -125,8 +126,8 @@
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn boton" data-bs-dismiss="modal">Aceptar</button>
                         </div>
                     </div>
                 </div>
@@ -159,8 +160,7 @@
         </section>
         <section id="lista-productos"></section>
     </main>
-
-    <script src="sweetalert2/dist/sweetalert2.all.min.js"></script>
+    <script src="./node_modules/sweetalert2/dist/sweetalert2.all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"
         integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3"
         crossorigin="anonymous"></script>

@@ -18,18 +18,20 @@ a {
 }
 a:hover{
     color: white;
-    background-color: #02314d;
+    background-color: #2b2d2f;
 }
 p{
     margin: 0 3px;
 }
 body {
+    color: white;
+    position: relative;
     display: flex;
-    height: 100vh;
+    min-height: 100vh;
 }
 .encabezado__lateral {
     width: 15%;
-    background-color: #004369;
+    background-color: #2f3134f9;
     color: white;
 }
 .logo {
@@ -46,7 +48,7 @@ body {
     margin-right: 10px;
 }
 main {
-    background-color: #dfe8f1;
+    background-color: #2b2d2f;
     width: 100vw;
 }
 .titulo {
@@ -58,9 +60,13 @@ main {
     justify-content: space-between;
     margin: 0 1.3rem;
 }
+.modal-content {
+    background-color: #2b2d2f;
+    border: rgba(128, 128, 128, 0.921) solid 1px;
+}
 .addproducto {
     height: fit-content;
-    background-color: rgb(245, 245, 245);
+    background-color: #2f3134f9;
     border: rgba(128, 128, 128, 0.407) solid 1px;
     margin: 1rem;
     padding: 10px;
@@ -70,8 +76,13 @@ form{
     flex-direction: column;
 }
 input{
+    color: white;
+    background-color: #2f3134f9;
     width: 100%;
     margin: 10px 10px 10px 0;
+}
+.btn-close {
+    background-color: white;
 }
 .inputCheck{
     width: fit-content;
@@ -83,6 +94,8 @@ input{
     margin-left: 2rem;
 }
 #buscar{
+    background-color: #2f3134f9;
+    color: white;
     margin-left: 10px;
 }
 .boton {
@@ -101,12 +114,14 @@ input{
     background-color: #01949A;
 }
 .botones_ordenar {
+    color: white;
+    background-color: #2f3134;
     border: none;
 }
 #ordenarLista {
     display: grid;
     grid-template-columns: 0.5fr 0.5fr 1.5fr 1fr 0.5fr 0.75fr 0.75fr 1.5fr;
-    background-color: rgb(245, 245, 245);
+    background-color: #2f3134f9;
     margin: 0 1rem;
     padding: 1rem 0;
     border: rgba(128, 128, 128, 0.407) solid 1px;
@@ -119,19 +134,15 @@ input{
     justify-content: center;
 }
 .boton-editar {
-    /* color: white;
-    background-color: #01949A;
-    padding: 5px 10px;
-    border: rgba(128, 128, 128, 0.407) solid 1px;;
-    border-radius: 7px; */
     margin-right: 10px;
 }
 #eliminar {
     border: none;
+    background-color: #2f3134f9;
 }
 .bi-x-circle-fill {
     display: flex;
-    background-color: rgb(245, 245, 245);
+    background-color: #2f3134f9;
     align-items: center;
     font-size: 2rem;
     color: rgb(226, 71, 71);
@@ -139,9 +150,12 @@ input{
 .bi-x-circle-fill:hover {
     color: #b93434;
 }
+#lista-productos {
+    background-color: #2b2d2f;
+}
 .indice-lista__productos {
     display: grid;
-    background-color: rgb(245, 245, 245);
+    background-color: #2f3134f9;
     align-items: center;
     grid-template-columns: 0.5fr 0.5fr 1.5fr 1fr 0.5fr 0.75fr 0.75fr 1.5fr;
     border: rgba(128, 128, 128, 0.407) solid 1px;
@@ -152,7 +166,9 @@ input{
 .navbar {
     display: none;
 }
-
+.nombreProducto, .numeroProducto{
+    display: none;
+}
 
 @media screen and (max-width: 426px) {
     body{
@@ -169,14 +185,14 @@ input{
     }
     .navbar{
         display: flex;
-        background-color: #004369;
+        background-color: #2f3134f9;
         color: white;
     }
     .offcanvas-header{
-        background-color: #02314d;
+        background-color: #2b2d2f;
     }
     .offcanvas-body{
-        background-color: #004369;
+        background-color: #2f3134f9;
     }
     .contenedorNumero, .contenedorPrecioIva, .contenedorId, .contenedorMarca, .btn_numero, .btn_id, .btn_marca, .btn_precioIva {
         display: none;
@@ -209,20 +225,43 @@ input{
 #ordenarClientes {
     display: grid;
     grid-template-columns: 1.8fr 1fr 1fr 1.4fr 1.8fr;
-    background-color: rgb(245, 245, 245);
+    background-color: #2f3134f9;
     margin: 0 1rem;
     padding: 1rem 0;
     border: rgba(128, 128, 128, 0.407) solid 1px;
     border-radius: 5px;
     text-align: center;
 }
+#lista-clientes {
+    background-color: #2b2d2f;
+}
 .indice-lista__clientes {
     display: grid;
-    background-color: rgb(245, 245, 245);
+    background-color: #2f3134f9;
     align-items: center;
     grid-template-columns: 1.8fr 1fr 1fr 1.4fr 1.8fr;
     border: rgba(128, 128, 128, 0.407) solid 1px;
     margin: 0 1rem 0;
     padding: 5px 0;
     text-align: center;
+}
+.boton-ver{
+    display: none;
+}
+
+@media screen and (max-width: 426px) {
+    .btn_id, .btn_email, .contenedorId, .contenedor-email {
+        display: none;
+    }
+    .boton-ver {
+        padding: 10px;
+        display: inline;
+    }
+    #ordenarClientes{
+        grid-template-columns: 1fr 1fr 2fr 1fr;
+    }
+    .indice-lista__clientes {
+        grid-template-columns: 1fr 1fr 2fr 1fr;
+    }
+    
 }
