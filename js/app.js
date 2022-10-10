@@ -117,7 +117,7 @@ function agregarProducto(infoProducto) {
         <div><p class="nombre">${producto.nombre}</p></div>
         <div class="contenedorMarca"><p class="marca">${producto.marca}</p></div>
         <div><p class="cantidad">${producto.cantidad}</p></div>
-        <div>$<p class="precio">${producto.precio}</p></div>
+        <div class="contenedorPrecio">$<p class="precio">${producto.precio}</p></div>
         <div class="contenedorPrecioIva">$<p class="precioIva">${producto.precio * 1.21}</p></div>
         <div class="botones"><button type="button" class="boton boton-editar" data-bs-toggle="modal" data-bs-target="#editarModal">Editar</button><button id="eliminar"><i class="bi bi-x-circle-fill"></i></button></div>`;
         productoAgregado.className = "indice-lista__productos";
