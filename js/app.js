@@ -17,6 +17,13 @@ let producto = document.querySelector("#producto");
 let marca = document.querySelector("#marca");
 let cantidad = document.querySelector("#cantidad");
 let precio = document.querySelector("#precio");
+// inputs del form editar.
+let editarNumero = document.querySelector("#editarNumero");
+let editarNumeroId = document.querySelector("#editarNid");
+let editarProducto = document.querySelector("#editarNombre");
+let editarMarca = document.querySelector("#editarMarca");
+let editarCantidad = document.querySelector("#editarCantidad");
+let editarPrecio = document.querySelector("#editarPrecio");
 // seccion donde agrego los productos.
 const listaProductos = document.querySelector("#lista-productos");
 
@@ -193,8 +200,8 @@ function formulario(e) {
         new Producto(
             numero.value,
             numeroId.value,
-            producto.value,
-            marca.value,
+            producto.value.toLowerCase(),
+            marca.value.toLowerCase(),
             cantidad.value,
             precio.value
         )
@@ -255,7 +262,7 @@ function eliminarDom(event) {
 
 // Funciones para actualizar/editar objeto dentro del array.
 const indice = () => {
-    let buscarIndice = productos.findIndex((producto) => producto.id == numeroId);
+    let buscarIndice = productos.findIndex((producto) => (producto.id == editarNumeroId));
     return buscarIndice;
 };
 const editar = () => {
@@ -298,12 +305,12 @@ function editarArray(event) {
         let encontrarEnDom = event.target.parentNode.parentNode;
         let valorEnDom = encontrarEnDom;
         // Tomo los datos del producto seleccionado y los imprimo en los input del modal.
-        numero = document.querySelector("#editarNumero").value = valorEnDom.querySelector(".numero").innerHTML;
-        numeroId = document.querySelector("#editarNid").value = valorEnDom.querySelector(".numero-id").innerHTML;
-        producto = document.querySelector("#editarNombre").value = valorEnDom.querySelector(".nombre").innerHTML;
-        marca = document.querySelector("#editarMarca").value = valorEnDom.querySelector(".marca").innerHTML;
-        cantidad = document.querySelector("#editarCantidad").value = valorEnDom.querySelector(".cantidad").innerHTML;
-        precio = document.querySelector("#editarPrecio").value = valorEnDom.querySelector(".precio").innerHTML;
+        editarNumero = document.querySelector("#editarNumero").value = valorEnDom.querySelector(".numero").innerHTML;
+        editarNumeroId = document.querySelector("#editarNid").value = valorEnDom.querySelector(".numero-id").innerHTML;
+        editarProducto = document.querySelector("#editarNombre").value = valorEnDom.querySelector(".nombre").innerHTML;
+        editarMarca = document.querySelector("#editarMarca").value = valorEnDom.querySelector(".marca").innerHTML;
+        editarCantidad = document.querySelector("#editarCantidad").value = valorEnDom.querySelector(".cantidad").innerHTML;
+        editarPrecio = document.querySelector("#editarPrecio").value = valorEnDom.querySelector(".precio").innerHTML;
     }
     // Tómo el formulario del modal y ejecuto la funcion editar.
     let formularioEditar = document.querySelector("#editarModal");
